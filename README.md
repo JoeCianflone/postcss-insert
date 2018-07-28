@@ -17,7 +17,7 @@ Funny thing is I wasn't the only one thinking of it. [Adam Wathen](https://githu
 ## Install
 
 ```bash
-$ npm install postcss-insert
+$ npm install postcss-insert`
 ```
 
 ## CSS Usage
