@@ -1,0 +1,48 @@
+{
+  "name": "postcss-insert",
+  "version": "1.0.0",
+  "description": "A postcss plugin that inserts one css classes properties into another, like Sass @extend...only better",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "apply",
+    "insert",
+    "classes",
+    "sass-mixins",
+    "extend",
+    "sass-extend"
+  ],
+  "author": "Joe Cianflone <joe@cianflone.co>",
+  "license": "MIT",
+  "repository": "JoeCianflone/postcss-insert",
+  "bugs": {
+    "url": "https://github.com/JoeCianflone/postcss-insert/issues"
+  },
+  "homepage": "https://github.com/JoeCianflone/postcss-insert",
+  "dependencies": {
+    "css.escape": "^1.5.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "lodash": "^4.17.10",
+    "postcss": "^6.0.16",
+    "prettier": "^1.13.7"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.2",
+    "eslint-config-postcss": "^2.0.2",
+    "jest": "^22.4.2"
+  },
+  "scripts": {
+    "test": "jest && eslint *.js"
+  },
+  "eslintConfig": {
+    "extends": "eslint-config-postcss/es5",
+    "env": {
+      "jest": true
+    }
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
