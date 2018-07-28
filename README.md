@@ -12,12 +12,11 @@ Mixins with Sass work better, you create a bunch of properties in a mixin and yo
 
 What I wanted was a way to have the simplicity of `@extend` with the behavior of a `@mixin`.
 
-Funny thing is I wasn't the only one thinking of it. [Adam Wathen](https://github.com/adamwathan) was thinking about this when he created [Tailwinds](https://tailwindcss.com/). Adam created a PostCSS plugin for [Tailwinds](https://tailwindcss.com/) called `@apply` which did almost everything I wanted it to do...except it was part of [Tailwinds](https://tailwindcss.com/). Now, Tailwinds is great, I have no issue with it, but I wanted this without *needing* a framework. Also, I didn't want to call it `@apply` because that name was being used with custom properties in CSS. I think its been deprecated, but there's a change it will be taken up again in the future. To me, `@apply` is a great name, but it comes with some potential baggage that I'd have to deal with later on.
+Funny thing is I wasn't the only one thinking of it. [Adam Wathen](https://github.com/adamwathan) was thinking about this when he created [Tailwinds](https://tailwindcss.com/). Adam created a PostCSS plugin called `@apply` which did almost everything I wanted it to do...except it was part of a framework. Now, Tailwinds is great, I have no issue with it, but I wanted this without *needing* a framework. Also, I didn't like the name `@apply` because that name was being used with custom properties in CSS. I think its been deprecated, but there's a chance it will be taken up again in the future. To me, `@apply` is a great name, but it comes with some potential baggage that I'd have to deal with later on, also I feel like `@insert` is more descriptive of what the plugin is doing.
 
 ## Install
 
 ```bash
-
 $ npm install postcss-insert
 ```
 
@@ -82,7 +81,7 @@ Output
 
 ### All props come over, even `!important`...unless you disable it
 
-Tailwinds specifically strips the `!important` from classes. By default, `@insert` will *not* strip `!important`, but there's an option `stripImportant` that you can set to `true` and it will...well strip the `!important`
+By default, `@insert` will *not* strip `!important`, but there's an option `stripImportant` that you can set to `true` and it will...well strip the `!important`:
 
 ```css
 .bar {
@@ -108,6 +107,36 @@ Output:
 .foo {
   color: green;
   font-size: 22px !important;
+  border: 1px solid red;
+}
+```
+
+With `stripImportant: true` you'd get the following:
+
+```css
+.bar {
+  color: green;
+  font-size: 22px !important;
+  border: 1px solid red;
+}
+
+.foo {
+  @insert .bar;
+}
+```
+
+Output:
+
+```css
+.bar {
+  color: green;
+  font-size: 22px !important;
+  border: 1px solid red;
+}
+
+.foo {
+  color: green;
+  font-size: 22px;
   border: 1px solid red;
 }
 ```
@@ -150,21 +179,15 @@ Output:
 }
 ```
 
-Why allow this to work? Well, I guess this just goes to my C programming days, I like giving people enough rope to hang themselves. Honestly, you should probably never do this, but I'm giving you the ability to do this because you may have a legit case that I am not thinking about.
-
-Don't worry, if you look at this in horror you can disable this via the options.
-
-## General usage
+## General Plugin Usage
 
 ```js
-// Default options
-postcss([ require('postcss-insert', {
-  allowFromMediaQueries: true,
-  stripImportant: false, })
+  postcss([ require('postcss-insert')
 ]);
 ```
 
-I recommend that this plugin run last in your stack. If you're doing any sort of transforms where a class doesn't exist `@insert` would fail. If you run this last (or second-to-last right become something like mqpacker) you'll ensure that all classes are there and ready to go...you know...unless you messed up something :) Happy coding!
+### Recommendation
 
+I recommend that this plugin run last in your PostCSS stack. If you're doing any sort of transforms where a class doesn't exist `@insert` would fail because it can't find the class. If you run this last (or second-to-last right before something like mqpacker) you'll ensure that all classes are there and ready to go. I may eventually add some sort of silent fail option if it can't find a class, but right now that is not the case. Happy coding!
 
 See [PostCSS] docs for examples for your environment.
